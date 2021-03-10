@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <SignAssembly>false</SignAssembly>
+    <Company>Home</Company>
+    <Authors>Byungdae Kim</Authors>
+    <Description>거상 다중 클라이언트 생성기</Description>
+    <Copyright>Copyright (C) 2021 Byungdae Kim</Copyright>
+  </PropertyGroup>
+
+</Project>
