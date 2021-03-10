@@ -10,6 +10,9 @@
     <Authors>Byungdae Kim</Authors>
     <Description>거상 다중 클라이언트 생성기</Description>
     <Copyright>Copyright (C) 2021 Byungdae Kim</Copyright>
+    <PackageLicenseFile></PackageLicenseFile>
+    <RepositoryUrl>https://github.com/byungmeo/GersangMultipleClientCreator</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
 </Project>

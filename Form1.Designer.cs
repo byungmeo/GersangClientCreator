@@ -29,7 +29,6 @@ namespace GersangMultipleClientCreator
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.tb_MasterPath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btn_FindMaster = new System.Windows.Forms.Button();
@@ -39,8 +38,6 @@ namespace GersangMultipleClientCreator
             this.lb_Master = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // tb_MasterPath
@@ -116,9 +113,6 @@ namespace GersangMultipleClientCreator
             this.label2.TabIndex = 11;
             this.label2.Text = "3클 폴더 이름";
             // 
-            // bindingSource1
-            // 
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -132,11 +126,11 @@ namespace GersangMultipleClientCreator
             this.Controls.Add(this.tb_SecondName);
             this.Controls.Add(this.btn_FindMaster);
             this.Controls.Add(this.tb_MasterPath);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "거상 다중 클라이언트 생성기";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -153,7 +147,6 @@ namespace GersangMultipleClientCreator
         private System.Windows.Forms.Label lb_Master;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }
 
