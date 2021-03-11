@@ -8,9 +8,9 @@ using System.Configuration;
 
 namespace GersangMultipleClientCreator
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -76,9 +76,24 @@ namespace GersangMultipleClientCreator
 
         private void btn_Run_Click(object sender, EventArgs e)
         {
+            //입력창이 비어있는 경우
             if (tb_MasterPath == null || tb_SecondName == null || tb_ThirdName == null)
             {
                 MessageBox.Show("본클 경로 또는 2,3클 폴더 이름을 지정해주세요.");
+                return;
+            }
+
+            //2클과 3클 이름이 같은 경우
+            if(tb_SecondName.Text == tb_ThirdName.Text)
+            {
+                MessageBox.Show("2클과 3클 폴더 이름을 각각 다르게 지정해주세요.");
+                return;
+            }
+
+            //본클 경로가 거상 폴더가 아닌 경우
+            if(Directory.GetFiles(tb_MasterPath.Text, "Gersang.exe", SearchOption.TopDirectoryOnly).Length <= 0)
+            {
+                MessageBox.Show("제대로 된 거상 경로를 지정해주세요. (Gersang.exe 파일이 있는 경로)");
                 return;
             }
 
@@ -99,35 +114,22 @@ namespace GersangMultipleClientCreator
             //CMD 구문 실행
             CreateDirectory(ref p);
             CreateSymbolicLink(ref p);
-
             Thread.Sleep(500);
-
             CopyFile();
             //
 
             p.StandardInput.Close();
-
-            //DEBUG//
-            //
-            //string resultValue = p.StandardOutput.ReadToEnd();
-            //
-            //DEBUG//
-
             p.WaitForExit();
             p.Close();
 
-            //DEBUG//
-            //
-            //MessageBox.Show(resultValue);
-            //
-            //DEBUG//
-
+            //경로 및 폴더이름 저장
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             config.AppSettings.Settings["masterPath"].Value = tb_MasterPath.Text;
             config.AppSettings.Settings["secondName"].Value = tb_SecondName.Text;
             config.AppSettings.Settings["thirdName"].Value = tb_ThirdName.Text;
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
+            //
 
             MessageBox.Show("생성 및 경로 저장 완료");
         }
@@ -147,6 +149,26 @@ namespace GersangMultipleClientCreator
         private void btn_FindMaster_Click(object sender, EventArgs e)
         {
             FindPath(tb_MasterPath);
+        }
+
+        private void tsm_github_Click(object sender, EventArgs e)
+        {
+            var ps = new ProcessStartInfo("https://github.com/byungmeo/GersangMultipleClientCreator/releases")
+            {
+                UseShellExecute = true,
+                Verb = "open"
+            };
+            Process.Start(ps);
+        }
+
+        private void tsm_blog_Click(object sender, EventArgs e)
+        {
+            var ps = new ProcessStartInfo("www.naver.com")
+            {
+                UseShellExecute = true,
+                Verb = "open"
+            };
+            Process.Start(ps);
         }
     }
 }
