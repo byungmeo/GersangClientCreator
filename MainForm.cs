@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Threading;
 using System.Configuration;
+using System.Reflection;
 
 namespace GersangMultipleClientCreator
 {
@@ -17,6 +18,8 @@ namespace GersangMultipleClientCreator
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Text += Application.ProductVersion;
+
             tb_MasterPath.Text = ConfigurationManager.AppSettings["masterPath"];
             tb_SecondName.Text = ConfigurationManager.AppSettings["secondName"];
             tb_ThirdName.Text = ConfigurationManager.AppSettings["thirdName"];
