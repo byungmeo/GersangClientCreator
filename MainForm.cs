@@ -134,7 +134,6 @@ namespace GersangMultipleClientCreator
                 string fileName = new FileInfo(target).Name; //Path.Combine함수 특징상 @"\"를 앞에 붙이지 말 것 (상대경로 절대경로 이해)
                 if (!File.Exists(onlinePath + @"\" + fileName))
                 {
-                    MessageBox.Show("!Exists");
                     string destFile = Path.Combine(onlinePath, fileName);
                     File.Copy(target, destFile, true);
                 }
