@@ -66,7 +66,12 @@ namespace GersangMultipleClientCreator
             //사운드 폴더 복사 체크 해제시
             if (!check_Sound.Checked)
             {
-                targetDirectorysList.Remove("music");
+                //이미 생성된 music 심볼릭 링크가 있을 경우 삭제합니다.
+                if(Directory.Exists(tb_MasterPath.Text + @"\..\" + tb_SecondName.Text + @"\music")) {
+                    Directory.Delete(tb_MasterPath.Text + @"\..\" + tb_SecondName.Text + @"\music");
+                }
+
+                targetDirectorysList.Remove("music"); //music폴더의 심볼릭링크를 생성하지않도록 리스트에서 삭제
             }
 
             string masterPath = tb_MasterPath.Text;
