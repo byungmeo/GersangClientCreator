@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Configuration;
 using System.Net.Http;
+using System.Collections.Generic;
 
 namespace GersangMultipleClientCreator
 {
@@ -25,7 +26,6 @@ namespace GersangMultipleClientCreator
             response.EnsureSuccessStatusCode();
             string responseUri = response.RequestMessage.RequestUri.ToString();
             string latestVersion = responseUri.Substring(responseUri.Length - 5);
-
             
             if (latestVersion != Application.ProductVersion)
             {
@@ -61,11 +61,19 @@ namespace GersangMultipleClientCreator
         {
             //char, eft, fnt, music, Online, pal, tempeft, Temporary Autopath, tile, yfnt, XIGNCODE
             string[] targetDirectorys = { "char", "eft", "fnt", "music", "Online", "pal", "tempeft", "Temporary Autopath", "tile", "yfnt", "XIGNCODE" };
+            List<string> targetDirectorysList = new List<string>(targetDirectorys);
+
+            //사운드 폴더 복사 체크 해제시
+            if (!check_Sound.Checked)
+            {
+                targetDirectorysList.Remove("music");
+            }
+
             string masterPath = tb_MasterPath.Text;
             string secondPath = tb_SecondName.Text;
             string thirdPath = tb_ThirdName.Text;
 
-            foreach (string target in targetDirectorys)
+            foreach (string target in targetDirectorysList)
             {
                 //mklink /d \Gersang\char \Gersang2\char
                 p.StandardInput.Write(@"mklink /d " + secondPath + @"\" + target + " " + masterPath + @"\" + target + Environment.NewLine);
@@ -198,6 +206,11 @@ namespace GersangMultipleClientCreator
                 Verb = "open"
             };
             Process.Start(ps);
+        }
+
+        private void check_Sound_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

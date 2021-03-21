@@ -44,12 +44,13 @@ namespace GersangMultipleClientCreator
             this.tsm_blog = new System.Windows.Forms.ToolStripMenuItem();
             this.tsm_github = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
+            this.check_Sound = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tb_MasterPath
             // 
-            this.tb_MasterPath.Location = new System.Drawing.Point(109, 43);
+            this.tb_MasterPath.Location = new System.Drawing.Point(109, 37);
             this.tb_MasterPath.Name = "tb_MasterPath";
             this.tb_MasterPath.ReadOnly = true;
             this.tb_MasterPath.Size = new System.Drawing.Size(169, 23);
@@ -63,7 +64,7 @@ namespace GersangMultipleClientCreator
             // 
             // btn_FindMaster
             // 
-            this.btn_FindMaster.Location = new System.Drawing.Point(284, 43);
+            this.btn_FindMaster.Location = new System.Drawing.Point(284, 37);
             this.btn_FindMaster.Name = "btn_FindMaster";
             this.btn_FindMaster.Size = new System.Drawing.Size(38, 21);
             this.btn_FindMaster.TabIndex = 1;
@@ -74,21 +75,21 @@ namespace GersangMultipleClientCreator
             // 
             // tb_SecondName
             // 
-            this.tb_SecondName.Location = new System.Drawing.Point(109, 72);
+            this.tb_SecondName.Location = new System.Drawing.Point(109, 66);
             this.tb_SecondName.Name = "tb_SecondName";
             this.tb_SecondName.Size = new System.Drawing.Size(92, 23);
             this.tb_SecondName.TabIndex = 0;
             // 
             // tb_ThirdName
             // 
-            this.tb_ThirdName.Location = new System.Drawing.Point(109, 101);
+            this.tb_ThirdName.Location = new System.Drawing.Point(109, 95);
             this.tb_ThirdName.Name = "tb_ThirdName";
             this.tb_ThirdName.Size = new System.Drawing.Size(92, 23);
             this.tb_ThirdName.TabIndex = 1;
             // 
             // btn_Run
             // 
-            this.btn_Run.Location = new System.Drawing.Point(131, 153);
+            this.btn_Run.Location = new System.Drawing.Point(131, 164);
             this.btn_Run.Name = "btn_Run";
             this.btn_Run.Size = new System.Drawing.Size(75, 23);
             this.btn_Run.TabIndex = 8;
@@ -100,7 +101,7 @@ namespace GersangMultipleClientCreator
             // lb_Master
             // 
             this.lb_Master.AutoSize = true;
-            this.lb_Master.Location = new System.Drawing.Point(32, 46);
+            this.lb_Master.Location = new System.Drawing.Point(32, 40);
             this.lb_Master.Name = "lb_Master";
             this.lb_Master.Size = new System.Drawing.Size(71, 15);
             this.lb_Master.TabIndex = 9;
@@ -109,7 +110,7 @@ namespace GersangMultipleClientCreator
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 75);
+            this.label1.Location = new System.Drawing.Point(21, 69);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 15);
             this.label1.TabIndex = 10;
@@ -118,7 +119,7 @@ namespace GersangMultipleClientCreator
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 104);
+            this.label2.Location = new System.Drawing.Point(21, 98);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(82, 15);
             this.label2.TabIndex = 11;
@@ -167,12 +168,26 @@ namespace GersangMultipleClientCreator
             this.label3.Size = new System.Drawing.Size(0, 15);
             this.label3.TabIndex = 14;
             // 
+            // check_Sound
+            // 
+            this.check_Sound.AutoSize = true;
+            this.check_Sound.Checked = true;
+            this.check_Sound.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.check_Sound.Location = new System.Drawing.Point(21, 139);
+            this.check_Sound.Name = "check_Sound";
+            this.check_Sound.Size = new System.Drawing.Size(106, 19);
+            this.check_Sound.TabIndex = 15;
+            this.check_Sound.Text = "music폴더복사";
+            this.check_Sound.UseVisualStyleBackColor = true;
+            this.check_Sound.CheckedChanged += new System.EventHandler(this.check_Sound_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(336, 197);
+            this.Controls.Add(this.check_Sound);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.label2);
@@ -213,6 +228,7 @@ namespace GersangMultipleClientCreator
         private System.Windows.Forms.ToolStripMenuItem tsm_information;
         private System.Windows.Forms.ToolStripMenuItem tsm_github;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox check_Sound;
     }
 }
 
