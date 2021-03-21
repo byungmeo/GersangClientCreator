@@ -59,31 +59,94 @@ namespace GersangMultipleClientCreator
 
         private void CreateSymbolicLink(ref Process p)
         {
+            string sourcePath = tb_MasterPath.Text;
+            string secondPath = sourcePath + @"\..\" + tb_SecondName.Text;
+            string thirdPath = sourcePath + @"\..\" + tb_ThirdName.Text;
+
             //char, eft, fnt, music, Online, pal, tempeft, Temporary Autopath, tile, yfnt, XIGNCODE
             string[] targetDirectorys = { "char", "eft", "fnt", "music", "Online", "pal", "tempeft", "Temporary Autopath", "tile", "yfnt", "XIGNCODE" };
             List<string> targetDirectorysList = new List<string>(targetDirectorys);
 
             //사운드 폴더 복사 체크 해제시
-            if (!check_Music.Checked)
+            if (check_Music.Checked)
             {
                 //이미 생성된 music 심볼릭 링크가 있을 경우 삭제합니다.
-                if(Directory.Exists(tb_MasterPath.Text + @"\..\" + tb_SecondName.Text + @"\music")) {
-                    Directory.Delete(tb_MasterPath.Text + @"\..\" + tb_SecondName.Text + @"\music");
+                if(Directory.Exists(secondPath + @"\music")) 
+                {
+                    Directory.Delete(thirdPath + @"\music");
+                }
+
+                //3클까지..
+                if (Directory.Exists(thirdPath + @"\music"))
+                {
+                    Directory.Delete(thirdPath + @"\music");
                 }
 
                 targetDirectorysList.Remove("music"); //music폴더의 심볼릭링크를 생성하지않도록 리스트에서 삭제
             }
 
-            string masterPath = tb_MasterPath.Text;
-            string secondPath = tb_SecondName.Text;
-            string thirdPath = tb_ThirdName.Text;
+            //본클과 클라들이 세팅을 서로 독립적으로 유지하고싶을때
+            if(check_Online.Checked)
+            {
+                FixedOnlineDirectory(secondPath, ref p);
+                FixedOnlineDirectory(thirdPath, ref p);
+                targetDirectorysList.Remove("Online"); //Online폴더의 심볼릭링크를 생성하지않도록 리스트에서 삭제
+            }
 
             foreach (string target in targetDirectorysList)
             {
                 //mklink /d \Gersang\char \Gersang2\char
-                p.StandardInput.Write(@"mklink /d " + secondPath + @"\" + target + " " + masterPath + @"\" + target + Environment.NewLine);
-                p.StandardInput.Write(@"mklink /d " + thirdPath + @"\" + target + " " + masterPath + @"\" + target + Environment.NewLine);
+                p.StandardInput.Write(@"mklink /d " + secondPath + @"\" + target + " " + sourcePath + @"\" + target + Environment.NewLine);
+                p.StandardInput.Write(@"mklink /d " + thirdPath + @"\" + target + " " + sourcePath + @"\" + target + Environment.NewLine);
             }
+        }
+
+        private bool IsSymbolic(string path)
+        {
+            FileInfo pathInfo = new FileInfo(path);
+            return pathInfo.Attributes.HasFlag(FileAttributes.ReparsePoint);
+        }
+
+        private void FixedOnlineDirectory(string subClientPath,ref Process p)
+        {
+            string sourcePath = tb_MasterPath.Text + @"\Online";
+            string onlinePath = subClientPath + @"\Online";
+
+            //이미 생성된 Online 폴더가 있을 경우
+            if (Directory.Exists(onlinePath))
+            {
+                //심볼릭 링크인지 확인합니다. 심볼릭이라면, 세팅을 공유하고있으므로, 삭제하고 일반 폴더를 만듭니다.
+                if (IsSymbolic(onlinePath))
+                {
+                    Directory.Delete(onlinePath);
+                    Directory.CreateDirectory(onlinePath);
+                }
+            }
+            else
+            {
+                //애초에 처음 클라폴더를 생성하는 경우입니다
+                Directory.CreateDirectory(onlinePath);
+            }
+
+            //이미 파일이 있는 경우를 제외하고 본클의 Online\위치에있는 파일들을 복사해옵니다.
+            foreach (string target in Directory.GetFiles(sourcePath, "*.*", SearchOption.TopDirectoryOnly))
+            {
+                string fileName = new FileInfo(target).Name; //Path.Combine함수 특징상 @"\"를 앞에 붙이지 말 것 (상대경로 절대경로 이해)
+                if (!File.Exists(onlinePath + @"\" + fileName))
+                {
+                    MessageBox.Show("!Exists");
+                    string destFile = Path.Combine(onlinePath, fileName);
+                    File.Copy(target, destFile, true);
+                }
+            }
+
+            //본클 Online폴더-하위폴더들의 심볼릭링크를 만듭니다.
+            foreach (string target in Directory.GetDirectories(sourcePath, "*.*", SearchOption.TopDirectoryOnly))
+            {
+                string dirName = @"\" + new DirectoryInfo(target).Name;
+                p.StandardInput.Write(@"mklink /d " + onlinePath + dirName + " " + sourcePath + dirName + Environment.NewLine);
+            }
+
         }
 
         private void CopyFile()
@@ -153,7 +216,7 @@ namespace GersangMultipleClientCreator
             p.StartInfo = psi;
             p.Start();
 
-            //CMD 구문 실행
+            //CMD 구문 실행 (p는 AKInteractive 폴더에 머물러있는상태)
             CreateDirectory(ref p);
             CreateSymbolicLink(ref p);
             Thread.Sleep(500);
@@ -216,7 +279,20 @@ namespace GersangMultipleClientCreator
         private void check_Music_MouseHover(object sender, EventArgs e)
         {
             ToolTip toolTip = new ToolTip();
-            toolTip.SetToolTip(this.check_Music, "2,3클에서 사운드가 실행되지 않도록 합니다.");
+            toolTip.AutoPopDelay = 20000; //좀 더 늦게 꺼지도록
+            toolTip.SetToolTip(this.check_Music, "체크를 해지하시면 2,3클에서 사운드가 실행되지 않도록 합니다.\n" +
+                "반자사 클라에서 소리가 나는 것을 원하지않는분께 유용합니다.\n" +
+                "검증되지않았지만 저사양 컴퓨터에서 좋은 효과가 있을 수 있습니다.");
+        }
+
+        private void check_Online_MouseHover(object sender, EventArgs e)
+        {
+            ToolTip toolTip = new ToolTip();
+            toolTip.AutoPopDelay = 20000; //좀 더 늦게 꺼지도록
+            toolTip.SetToolTip(this.check_Online, "체크를 해지하시면 2,3클의 거상 세팅값을 본클과 공유합니다.\n" +
+                "지금까지 설정한 2,3클의 일부 세팅이 모두 본클라 세팅으로 바뀌며, \n" +
+                "한 클라이언트에서 설정을 변경하면 다른 모든 클라도 똑같이 변경됩니다.\n" +
+                "전체화면or창크기 / 단축키 설정 / UI변경옵션 / 스킬범위표시옵션 / 키보드스킬사용옵션");
         }
     }
 }
