@@ -29,6 +29,7 @@ namespace GersangMultipleClientCreator
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tb_MasterPath = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.btn_FindMaster = new System.Windows.Forms.Button();
@@ -42,6 +43,7 @@ namespace GersangMultipleClientCreator
             this.tsm_information = new System.Windows.Forms.ToolStripMenuItem();
             this.tsm_blog = new System.Windows.Forms.ToolStripMenuItem();
             this.tsm_github = new System.Windows.Forms.ToolStripMenuItem();
+            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -157,12 +159,21 @@ namespace GersangMultipleClientCreator
             this.tsm_github.Text = "제작자 깃허브";
             this.tsm_github.Click += new System.EventHandler(this.tsm_github_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(0, 179);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(0, 15);
+            this.label3.TabIndex = 14;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(336, 197);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -173,6 +184,8 @@ namespace GersangMultipleClientCreator
             this.Controls.Add(this.btn_FindMaster);
             this.Controls.Add(this.tb_MasterPath);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "거상 다클생성기 v";
@@ -199,6 +212,7 @@ namespace GersangMultipleClientCreator
         private System.Windows.Forms.ToolStripMenuItem tsm_blog;
         private System.Windows.Forms.ToolStripMenuItem tsm_information;
         private System.Windows.Forms.ToolStripMenuItem tsm_github;
+        private System.Windows.Forms.Label label3;
     }
 }
 

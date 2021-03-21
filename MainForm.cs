@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Threading;
 using System.Configuration;
-using System.Reflection;
+using System.Net.Http;
 
 namespace GersangMultipleClientCreator
 {
@@ -16,9 +16,35 @@ namespace GersangMultipleClientCreator
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            this.Text += Application.ProductVersion;
+        private async void Form1_Load(object sender, EventArgs e) {
+            this.Text += Application.ProductVersion; //폼 제목에 최신버전명 붙이기
+
+            //업데이트 유무 확인
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync("https://github.com/byungmeo/GersangMultipleClientCreator/releases/latest");
+            response.EnsureSuccessStatusCode();
+            string responseUri = response.RequestMessage.RequestUri.ToString();
+            string latestVersion = responseUri.Substring(responseUri.Length - 5);
+
+            
+            if (latestVersion != Application.ProductVersion)
+            {
+                DialogResult dr;
+
+                dr = MessageBox.Show("새로운 업데이트 버전(v." + latestVersion + ") 이 있습니다.\n" +
+                    "다운로드 주소로 접속하시겠습니까?",
+                    "업데이트 확인", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                if(dr == DialogResult.OK)
+                {
+                    var ps = new ProcessStartInfo("https://github.com/byungmeo/GersangMultipleClientCreator/releases/latest")
+                    {
+                        UseShellExecute = true,
+                        Verb = "open"
+                    };
+                    Process.Start(ps);
+                }
+            }
 
             tb_MasterPath.Text = ConfigurationManager.AppSettings["masterPath"];
             tb_SecondName.Text = ConfigurationManager.AppSettings["secondName"];
@@ -80,7 +106,7 @@ namespace GersangMultipleClientCreator
         private void btn_Run_Click(object sender, EventArgs e)
         {
             //입력창이 비어있는 경우
-            if (tb_MasterPath == null || tb_SecondName == null || tb_ThirdName == null)
+            if (tb_MasterPath.TextLength == 0 || tb_SecondName.TextLength == 0 || tb_ThirdName.TextLength == 0)
             {
                 MessageBox.Show("본클 경로 또는 2,3클 폴더 이름을 지정해주세요.");
                 return;
