@@ -45,6 +45,7 @@ namespace GersangMultipleClientCreator
             this.tsm_github = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
             this.check_Music = new System.Windows.Forms.CheckBox();
+            this.check_Online = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,7 +90,7 @@ namespace GersangMultipleClientCreator
             // 
             // btn_Run
             // 
-            this.btn_Run.Location = new System.Drawing.Point(131, 164);
+            this.btn_Run.Location = new System.Drawing.Point(131, 173);
             this.btn_Run.Name = "btn_Run";
             this.btn_Run.Size = new System.Drawing.Size(75, 23);
             this.btn_Run.TabIndex = 8;
@@ -173,20 +174,34 @@ namespace GersangMultipleClientCreator
             this.check_Music.AutoSize = true;
             this.check_Music.Checked = true;
             this.check_Music.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.check_Music.Location = new System.Drawing.Point(21, 139);
+            this.check_Music.Location = new System.Drawing.Point(50, 139);
             this.check_Music.Name = "check_Music";
             this.check_Music.Size = new System.Drawing.Size(106, 19);
             this.check_Music.TabIndex = 15;
-            this.check_Music.Text = "music폴더복사";
+            this.check_Music.Text = "music폴더포함";
             this.check_Music.UseVisualStyleBackColor = true;
             this.check_Music.MouseHover += new System.EventHandler(this.check_Music_MouseHover);
+            // 
+            // check_Online
+            // 
+            this.check_Online.AutoSize = true;
+            this.check_Online.Checked = true;
+            this.check_Online.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.check_Online.Location = new System.Drawing.Point(169, 139);
+            this.check_Online.Name = "check_Online";
+            this.check_Online.Size = new System.Drawing.Size(130, 19);
+            this.check_Online.TabIndex = 16;
+            this.check_Online.Text = "개별세팅저장(권장)";
+            this.check_Online.UseVisualStyleBackColor = true;
+            this.check_Online.MouseHover += new System.EventHandler(this.check_Online_MouseHover);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(336, 197);
+            this.ClientSize = new System.Drawing.Size(336, 212);
+            this.Controls.Add(this.check_Online);
             this.Controls.Add(this.check_Music);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.menuStrip1);
@@ -229,6 +244,7 @@ namespace GersangMultipleClientCreator
         private System.Windows.Forms.ToolStripMenuItem tsm_github;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox check_Music;
+        private System.Windows.Forms.CheckBox check_Online;
     }
 }
 
