@@ -64,7 +64,7 @@ namespace GersangMultipleClientCreator
             List<string> targetDirectorysList = new List<string>(targetDirectorys);
 
             //사운드 폴더 복사 체크 해제시
-            if (!check_Sound.Checked)
+            if (!check_Music.Checked)
             {
                 //이미 생성된 music 심볼릭 링크가 있을 경우 삭제합니다.
                 if(Directory.Exists(tb_MasterPath.Text + @"\..\" + tb_SecondName.Text + @"\music")) {
@@ -213,9 +213,10 @@ namespace GersangMultipleClientCreator
             Process.Start(ps);
         }
 
-        private void check_Sound_CheckedChanged(object sender, EventArgs e)
+        private void check_Music_MouseHover(object sender, EventArgs e)
         {
-
+            ToolTip toolTip = new ToolTip();
+            toolTip.SetToolTip(this.check_Music, "2,3클에서 사운드가 실행되지 않도록 합니다.");
         }
     }
 }

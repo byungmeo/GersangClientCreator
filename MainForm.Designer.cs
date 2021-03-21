@@ -44,7 +44,7 @@ namespace GersangMultipleClientCreator
             this.tsm_blog = new System.Windows.Forms.ToolStripMenuItem();
             this.tsm_github = new System.Windows.Forms.ToolStripMenuItem();
             this.label3 = new System.Windows.Forms.Label();
-            this.check_Sound = new System.Windows.Forms.CheckBox();
+            this.check_Music = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -168,18 +168,18 @@ namespace GersangMultipleClientCreator
             this.label3.Size = new System.Drawing.Size(0, 15);
             this.label3.TabIndex = 14;
             // 
-            // check_Sound
+            // check_Music
             // 
-            this.check_Sound.AutoSize = true;
-            this.check_Sound.Checked = true;
-            this.check_Sound.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.check_Sound.Location = new System.Drawing.Point(21, 139);
-            this.check_Sound.Name = "check_Sound";
-            this.check_Sound.Size = new System.Drawing.Size(106, 19);
-            this.check_Sound.TabIndex = 15;
-            this.check_Sound.Text = "music폴더복사";
-            this.check_Sound.UseVisualStyleBackColor = true;
-            this.check_Sound.CheckedChanged += new System.EventHandler(this.check_Sound_CheckedChanged);
+            this.check_Music.AutoSize = true;
+            this.check_Music.Checked = true;
+            this.check_Music.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.check_Music.Location = new System.Drawing.Point(21, 139);
+            this.check_Music.Name = "check_Music";
+            this.check_Music.Size = new System.Drawing.Size(106, 19);
+            this.check_Music.TabIndex = 15;
+            this.check_Music.Text = "music폴더복사";
+            this.check_Music.UseVisualStyleBackColor = true;
+            this.check_Music.MouseHover += new System.EventHandler(this.check_Music_MouseHover);
             // 
             // MainForm
             // 
@@ -187,7 +187,7 @@ namespace GersangMultipleClientCreator
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(336, 197);
-            this.Controls.Add(this.check_Sound);
+            this.Controls.Add(this.check_Music);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.label2);
@@ -228,7 +228,7 @@ namespace GersangMultipleClientCreator
         private System.Windows.Forms.ToolStripMenuItem tsm_information;
         private System.Windows.Forms.ToolStripMenuItem tsm_github;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox check_Sound;
+        private System.Windows.Forms.CheckBox check_Music;
     }
 }
 
