@@ -73,7 +73,7 @@ namespace GersangMultipleClientCreator
                 //이미 생성된 music 심볼릭 링크가 있을 경우 삭제합니다.
                 if(Directory.Exists(secondPath + @"\music")) 
                 {
-                    Directory.Delete(thirdPath + @"\music");
+                    Directory.Delete(secondPath + @"\music");
                 }
 
                 //3클까지..

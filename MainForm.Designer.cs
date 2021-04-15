@@ -174,24 +174,24 @@ namespace GersangMultipleClientCreator
             this.check_Music.AutoSize = true;
             this.check_Music.Checked = true;
             this.check_Music.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.check_Music.Location = new System.Drawing.Point(50, 139);
+            this.check_Music.Enabled = false;
+            this.check_Music.Location = new System.Drawing.Point(21, 139);
             this.check_Music.Name = "check_Music";
-            this.check_Music.Size = new System.Drawing.Size(106, 19);
+            this.check_Music.Size = new System.Drawing.Size(150, 19);
             this.check_Music.TabIndex = 15;
-            this.check_Music.Text = "music폴더포함";
+            this.check_Music.Text = "music폴더포함(점검중)";
             this.check_Music.UseVisualStyleBackColor = true;
             this.check_Music.MouseHover += new System.EventHandler(this.check_Music_MouseHover);
             // 
             // check_Online
             // 
             this.check_Online.AutoSize = true;
-            this.check_Online.Checked = true;
-            this.check_Online.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.check_Online.Location = new System.Drawing.Point(169, 139);
+            this.check_Online.Enabled = false;
+            this.check_Online.Location = new System.Drawing.Point(177, 139);
             this.check_Online.Name = "check_Online";
-            this.check_Online.Size = new System.Drawing.Size(130, 19);
+            this.check_Online.Size = new System.Drawing.Size(142, 19);
             this.check_Online.TabIndex = 16;
-            this.check_Online.Text = "개별세팅저장(권장)";
+            this.check_Online.Text = "개별세팅저장(점검중)";
             this.check_Online.UseVisualStyleBackColor = true;
             this.check_Online.MouseHover += new System.EventHandler(this.check_Online_MouseHover);
             // 
