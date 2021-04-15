@@ -1,3 +1,2 @@
-# GersangMultipleClientCreator
-수정,배포,상업이용 O
-저작자표시만 부탁드립니다.
+# 거상다클생성기 v.1.2.1
+
