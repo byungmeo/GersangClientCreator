@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationManifest>Src\app.manifest</ApplicationManifest>
     <SignAssembly>false</SignAssembly>
     <Company>Home</Company>
     <Authors>Byungdae Kim</Authors>
@@ -15,7 +15,7 @@
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.2.1</Version>
-    <ApplicationIcon>DONKY.ico</ApplicationIcon>
+    <ApplicationIcon>Img\DONKY.ico</ApplicationIcon>
     <RootNamespace>GersangMultipleClientCreator</RootNamespace>
     <Product>GersangMultipleClientCreator</Product>
   </PropertyGroup>
