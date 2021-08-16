@@ -1,5 +1,5 @@
 ﻿
-namespace GersangMultipleClientCreator
+namespace GersangClientCreator
 {
     partial class MainForm
     {
@@ -46,6 +46,7 @@ namespace GersangMultipleClientCreator
             this.label3 = new System.Windows.Forms.Label();
             this.check_Music = new System.Windows.Forms.CheckBox();
             this.check_Online = new System.Windows.Forms.CheckBox();
+            this.check_Shortcut = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,7 +91,7 @@ namespace GersangMultipleClientCreator
             // 
             // btn_Run
             // 
-            this.btn_Run.Location = new System.Drawing.Point(131, 173);
+            this.btn_Run.Location = new System.Drawing.Point(131, 212);
             this.btn_Run.Name = "btn_Run";
             this.btn_Run.Size = new System.Drawing.Size(75, 23);
             this.btn_Run.TabIndex = 8;
@@ -175,7 +176,7 @@ namespace GersangMultipleClientCreator
             this.check_Music.Checked = true;
             this.check_Music.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_Music.Enabled = false;
-            this.check_Music.Location = new System.Drawing.Point(21, 139);
+            this.check_Music.Location = new System.Drawing.Point(21, 174);
             this.check_Music.Name = "check_Music";
             this.check_Music.Size = new System.Drawing.Size(150, 19);
             this.check_Music.TabIndex = 15;
@@ -187,7 +188,7 @@ namespace GersangMultipleClientCreator
             // 
             this.check_Online.AutoSize = true;
             this.check_Online.Enabled = false;
-            this.check_Online.Location = new System.Drawing.Point(177, 139);
+            this.check_Online.Location = new System.Drawing.Point(177, 174);
             this.check_Online.Name = "check_Online";
             this.check_Online.Size = new System.Drawing.Size(142, 19);
             this.check_Online.TabIndex = 16;
@@ -195,12 +196,23 @@ namespace GersangMultipleClientCreator
             this.check_Online.UseVisualStyleBackColor = true;
             this.check_Online.MouseHover += new System.EventHandler(this.check_Online_MouseHover);
             // 
+            // check_Shortcut
+            // 
+            this.check_Shortcut.AutoSize = true;
+            this.check_Shortcut.Location = new System.Drawing.Point(21, 139);
+            this.check_Shortcut.Name = "check_Shortcut";
+            this.check_Shortcut.Size = new System.Drawing.Size(102, 19);
+            this.check_Shortcut.TabIndex = 17;
+            this.check_Shortcut.Text = "바로가기 생성";
+            this.check_Shortcut.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(336, 212);
+            this.ClientSize = new System.Drawing.Size(336, 251);
+            this.Controls.Add(this.check_Shortcut);
             this.Controls.Add(this.check_Online);
             this.Controls.Add(this.check_Music);
             this.Controls.Add(this.label3);
@@ -245,6 +257,7 @@ namespace GersangMultipleClientCreator
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox check_Music;
         private System.Windows.Forms.CheckBox check_Online;
+        private System.Windows.Forms.CheckBox check_Shortcut;
     }
 }
 

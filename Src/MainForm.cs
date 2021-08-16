@@ -7,8 +7,9 @@ using System.Threading;
 using System.Configuration;
 using System.Net.Http;
 using System.Collections.Generic;
+using IWshRuntimeLibrary;
 
-namespace GersangMultipleClientCreator
+namespace GersangClientCreator
 {
     public partial class MainForm : Form
     {
@@ -22,7 +23,7 @@ namespace GersangMultipleClientCreator
 
             //업데이트 유무 확인
             HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync("https://github.com/byungmeo/GersangMultipleClientCreator/releases/latest");
+            HttpResponseMessage response = await client.GetAsync("https://github.com/byungmeo/GersangClientCreator/releases/latest");
             response.EnsureSuccessStatusCode();
             string responseUri = response.RequestMessage.RequestUri.ToString();
             string latestVersion = responseUri.Substring(responseUri.Length - 5);
@@ -37,7 +38,7 @@ namespace GersangMultipleClientCreator
 
                 if(dr == DialogResult.OK)
                 {
-                    var ps = new ProcessStartInfo("https://github.com/byungmeo/GersangMultipleClientCreator/releases/latest")
+                    var ps = new ProcessStartInfo("https://github.com/byungmeo/GersangClientCreator/releases/latest")
                     {
                         UseShellExecute = true,
                         Verb = "open"
@@ -50,6 +51,55 @@ namespace GersangMultipleClientCreator
             tb_SecondName.Text = ConfigurationManager.AppSettings["secondName"];
             tb_ThirdName.Text = ConfigurationManager.AppSettings["thirdName"];
         }
+
+        //바로가기 생성
+        private void CreateShortcut()
+        {
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            DirectoryInfo directoryInfo = new DirectoryInfo(desktopPath);
+
+            string sourcePath = tb_MasterPath.Text;
+            string[] temp = sourcePath.Split(@"\");
+            string sourceName = temp[temp.Length - 1];
+
+            string firstName = desktopPath.ToString() + @"\" + sourceName + ".lnk";
+            string secondName = desktopPath.ToString() + @"\" + tb_SecondName.Text + ".lnk";
+            string thirdName = desktopPath.ToString() + @"\" + tb_ThirdName.Text + ".lnk";
+
+            FileInfo firstShortcut = new FileInfo(firstName);
+            FileInfo secondShortcut = new FileInfo(secondName);
+            FileInfo thirdShortcut = new FileInfo(thirdName);
+
+            if(firstShortcut.Exists && secondShortcut.Exists && thirdShortcut.Exists)
+            {
+                return;
+            }
+
+            WshShell wsh = new WshShell();
+
+
+            if (!firstShortcut.Exists)
+            {
+                IWshShortcut firstWshShortcut = wsh.CreateShortcut(firstShortcut.FullName);
+                firstWshShortcut.TargetPath = sourcePath + @"\Run.exe";
+                firstWshShortcut.Save();
+            }
+
+            if (!secondShortcut.Exists)
+            {
+                IWshShortcut secondWshShortcut = wsh.CreateShortcut(secondShortcut.FullName);
+                secondWshShortcut.TargetPath = sourcePath + @"\..\" + tb_SecondName.Text + @"\Run.exe";
+                secondWshShortcut.Save();
+            }
+            
+            if(!thirdShortcut.Exists)
+            {
+                IWshShortcut thirdWshShortcut = wsh.CreateShortcut(thirdShortcut.FullName);
+                thirdWshShortcut.TargetPath = sourcePath + @"\..\" + tb_ThirdName.Text + @"\Run.exe";
+                thirdWshShortcut.Save();
+            }
+        }
+
 
         private void CreateDirectory(ref Process p)
         {
@@ -132,10 +182,10 @@ namespace GersangMultipleClientCreator
             foreach (string target in Directory.GetFiles(sourcePath, "*.*", SearchOption.TopDirectoryOnly))
             {
                 string fileName = new FileInfo(target).Name; //Path.Combine함수 특징상 @"\"를 앞에 붙이지 말 것 (상대경로 절대경로 이해)
-                if (!File.Exists(onlinePath + @"\" + fileName))
+                if (!System.IO.File.Exists(onlinePath + @"\" + fileName))
                 {
                     string destFile = Path.Combine(onlinePath, fileName);
-                    File.Copy(target, destFile, true);
+                    System.IO.File.Copy(target, destFile, true);
                 }
             }
 
@@ -169,11 +219,11 @@ namespace GersangMultipleClientCreator
 
                     //second
                     destFile = Path.Combine(secondPath, fileName);
-                    File.Copy(s, destFile, true);
+                    System.IO.File.Copy(s, destFile, true);
 
                     //third
                     destFile = Path.Combine(thirdPath, fileName);
-                    File.Copy(s, destFile, true);
+                    System.IO.File.Copy(s, destFile, true);
                 }
             }
         }
@@ -218,9 +268,15 @@ namespace GersangMultipleClientCreator
             //CMD 구문 실행 (p는 AKInteractive 폴더에 머물러있는상태)
             CreateDirectory(ref p);
             CreateSymbolicLink(ref p);
-            Thread.Sleep(500);
-            CopyFile();
             //
+            Thread.Sleep(500);
+
+            CopyFile();
+            if(check_Shortcut.Checked)
+            {
+                CreateShortcut();
+            }
+            
 
             p.StandardInput.Close();
             p.WaitForExit();
@@ -257,7 +313,7 @@ namespace GersangMultipleClientCreator
 
         private void tsm_github_Click(object sender, EventArgs e)
         {
-            var ps = new ProcessStartInfo("https://github.com/byungmeo/GersangMultipleClientCreator/releases")
+            var ps = new ProcessStartInfo("https://github.com/byungmeo/GersangClientCreator/releases")
             {
                 UseShellExecute = true,
                 Verb = "open"
