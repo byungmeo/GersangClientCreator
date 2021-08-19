@@ -57,8 +57,7 @@ namespace GersangClientCreator
             this.tb_MasterPath.Name = "tb_MasterPath";
             this.tb_MasterPath.ReadOnly = true;
             this.tb_MasterPath.Size = new System.Drawing.Size(169, 23);
-            this.tb_MasterPath.TabIndex = 10;
-            this.tb_MasterPath.TabStop = false;
+            this.tb_MasterPath.TabIndex = 0;
             // 
             // folderBrowserDialog1
             // 
@@ -82,8 +81,7 @@ namespace GersangClientCreator
             this.tb_SecondName.Location = new System.Drawing.Point(127, 66);
             this.tb_SecondName.Name = "tb_SecondName";
             this.tb_SecondName.Size = new System.Drawing.Size(92, 23);
-            this.tb_SecondName.TabIndex = 0;
-            this.tb_SecondName.TabStop = false;
+            this.tb_SecondName.TabIndex = 1;
             this.tb_SecondName.Tag = "Gersang2";
             this.tb_SecondName.Text = "Gersang2";
             this.tb_SecondName.Enter += new System.EventHandler(this.tb_Name_Enter);
@@ -95,8 +93,7 @@ namespace GersangClientCreator
             this.tb_ThirdName.Location = new System.Drawing.Point(127, 95);
             this.tb_ThirdName.Name = "tb_ThirdName";
             this.tb_ThirdName.Size = new System.Drawing.Size(92, 23);
-            this.tb_ThirdName.TabIndex = 1;
-            this.tb_ThirdName.TabStop = false;
+            this.tb_ThirdName.TabIndex = 2;
             this.tb_ThirdName.Tag = "Gersang3";
             this.tb_ThirdName.Text = "Gersang3";
             this.tb_ThirdName.Enter += new System.EventHandler(this.tb_Name_Enter);
@@ -167,14 +164,14 @@ namespace GersangClientCreator
             // tsm_blog
             // 
             this.tsm_blog.Name = "tsm_blog";
-            this.tsm_blog.Size = new System.Drawing.Size(180, 22);
+            this.tsm_blog.Size = new System.Drawing.Size(150, 22);
             this.tsm_blog.Text = "제작자 블로그";
             this.tsm_blog.Click += new System.EventHandler(this.tsm_blog_Click);
             // 
             // tsm_github
             // 
             this.tsm_github.Name = "tsm_github";
-            this.tsm_github.Size = new System.Drawing.Size(180, 22);
+            this.tsm_github.Size = new System.Drawing.Size(150, 22);
             this.tsm_github.Text = "제작자 깃허브";
             this.tsm_github.Click += new System.EventHandler(this.tsm_github_Click);
             // 
@@ -196,6 +193,7 @@ namespace GersangClientCreator
             this.check_Music.Name = "check_Music";
             this.check_Music.Size = new System.Drawing.Size(150, 19);
             this.check_Music.TabIndex = 15;
+            this.check_Music.TabStop = false;
             this.check_Music.Text = "music폴더포함(기본값)";
             this.check_Music.UseVisualStyleBackColor = true;
             this.check_Music.MouseHover += new System.EventHandler(this.check_Music_MouseHover);
@@ -209,6 +207,7 @@ namespace GersangClientCreator
             this.check_Online.Name = "check_Online";
             this.check_Online.Size = new System.Drawing.Size(162, 19);
             this.check_Online.TabIndex = 16;
+            this.check_Online.TabStop = false;
             this.check_Online.Text = "단축키 개별 적용(기본값)";
             this.check_Online.UseVisualStyleBackColor = true;
             this.check_Online.MouseHover += new System.EventHandler(this.check_Online_MouseHover);
@@ -220,6 +219,7 @@ namespace GersangClientCreator
             this.check_Shortcut.Name = "check_Shortcut";
             this.check_Shortcut.Size = new System.Drawing.Size(102, 19);
             this.check_Shortcut.TabIndex = 17;
+            this.check_Shortcut.TabStop = false;
             this.check_Shortcut.Text = "바로가기 생성";
             this.check_Shortcut.UseVisualStyleBackColor = true;
             // 

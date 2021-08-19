@@ -49,8 +49,17 @@ namespace GersangClientCreator
             }
 
             tb_MasterPath.Text = ConfigurationManager.AppSettings["masterPath"];
-            tb_SecondName.Text = ConfigurationManager.AppSettings["secondName"];
-            tb_ThirdName.Text = ConfigurationManager.AppSettings["thirdName"];
+            string second = ConfigurationManager.AppSettings["secondName"];
+            string third = ConfigurationManager.AppSettings["thirdName"];
+            if(second != "" || third != "")
+            {
+                tb_SecondName.Text = second;
+                tb_SecondName.ForeColor = Color.Black;
+
+                tb_ThirdName.Text = third;
+                tb_ThirdName.ForeColor = Color.Black;
+            }
+            
         }
 
         //바로가기 생성
