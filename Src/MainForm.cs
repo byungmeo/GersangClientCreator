@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Net.Http;
 using System.Collections.Generic;
 using IWshRuntimeLibrary;
+using System.Drawing;
 
 namespace GersangClientCreator
 {
@@ -117,6 +118,7 @@ namespace GersangClientCreator
             string[] targetDirectorys = { "char", "eft", "fnt", "music", "Online", "pal", "tempeft", "Temporary Autopath", "tile", "yfnt", "XIGNCODE" };
             List<string> targetDirectorysList = new List<string>(targetDirectorys);
 
+            /*
             //사운드 폴더 복사 체크 해제시
             if (!check_Music.Checked)
             {
@@ -134,6 +136,7 @@ namespace GersangClientCreator
 
                 targetDirectorysList.Remove("music"); //music폴더의 심볼릭링크를 생성하지않도록 리스트에서 삭제
             }
+            */
 
             //본클과 클라들이 세팅을 서로 독립적으로 유지하고싶을때
             if(check_Online.Checked)
@@ -143,6 +146,7 @@ namespace GersangClientCreator
                 targetDirectorysList.Remove("Online"); //Online폴더의 심볼릭링크를 생성하지않도록 리스트에서 삭제
             }
 
+            //최종적으로 targetDirectorysList에 있는 폴더들을 심볼릭링크로 생성합니다.
             foreach (string target in targetDirectorysList)
             {
                 //mklink /d \Gersang\char \Gersang2\char
@@ -179,13 +183,27 @@ namespace GersangClientCreator
             }
 
             //이미 파일이 있는 경우를 제외하고 본클의 Online\위치에있는 파일들을 복사해옵니다.
+            //2021-08-19 : KeySetting.dat만 복사하고, 나머지는 심블릭파일로 만든다
             foreach (string target in Directory.GetFiles(sourcePath, "*.*", SearchOption.TopDirectoryOnly))
             {
-                string fileName = new FileInfo(target).Name; //Path.Combine함수 특징상 @"\"를 앞에 붙이지 말 것 (상대경로 절대경로 이해)
-                if (!System.IO.File.Exists(onlinePath + @"\" + fileName))
+                //Path.Combine함수 특징상 @"\"를 앞에 붙이지 말 것 (상대경로 절대경로 이해)
+                //target = 전체경로
+                //fileName = 경로제외하고 파일 이름만 (ex : KeySetting.dat)
+                string fileName = new FileInfo(target).Name;
+
+                //KeySetting.dat은 복사
+                if (fileName == "KeySetting.dat")
                 {
-                    string destFile = Path.Combine(onlinePath, fileName);
-                    System.IO.File.Copy(target, destFile, true);
+                    
+                    if (!System.IO.File.Exists(onlinePath + @"\" + fileName))
+                    {
+                        string destFile = Path.Combine(onlinePath, fileName);
+                        System.IO.File.Copy(target, destFile, true);
+                    }
+                } else
+                {
+                    //그 외 파일은 심볼릭으로 (파일은 /d 옵션이 필요없다)
+                    p.StandardInput.Write(@"mklink " + onlinePath + @"\" + fileName + " " + sourcePath + @"\" + fileName + Environment.NewLine);
                 }
             }
 
@@ -195,7 +213,6 @@ namespace GersangClientCreator
                 string dirName = @"\" + new DirectoryInfo(target).Name;
                 p.StandardInput.Write(@"mklink /d " + onlinePath + dirName + " " + sourcePath + dirName + Environment.NewLine);
             }
-
         }
 
         private void CopyFile()
@@ -348,6 +365,26 @@ namespace GersangClientCreator
                 "지금까지 설정한 2,3클의 일부 세팅이 모두 본클라 세팅으로 바뀌며, \n" +
                 "한 클라이언트에서 설정을 변경하면 다른 모든 클라도 똑같이 변경됩니다.\n" +
                 "전체화면or창크기 / 단축키 설정 / UI변경옵션 / 스킬범위표시옵션 / 키보드스킬사용옵션");
+        }
+
+        private void tb_Name_Enter(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if(textBox.ForeColor == Color.Gray)
+            {
+                textBox.Text = "";
+                textBox.ForeColor = Color.Black;
+            }
+        }
+
+        private void tb_Name_Leave(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox.Text == "")
+            {
+                textBox.Text = textBox.Tag.ToString();
+                textBox.ForeColor = Color.Gray;
+            }
         }
     }
 }
