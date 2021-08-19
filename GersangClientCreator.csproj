@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/byungmeo/GersangClientCreator</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.2.2</Version>
+    <Version>1.2.3</Version>
     <ApplicationIcon>Img\DONKY.ico</ApplicationIcon>
     <RootNamespace>GersangClientCreator</RootNamespace>
     <Product>GersangClientCreator</Product>
