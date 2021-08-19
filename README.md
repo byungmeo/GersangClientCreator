@@ -1,4 +1,4 @@
-# 거상다클생성기 v.1.2.1
+# 거상다클생성기 v.1.2.3
 
 다운로드 주소
 https://github.com/byungmeo/GersangClientCreator/releases/latest
