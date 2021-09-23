@@ -1,6 +1,6 @@
 # 거상다클생성기 v.1.2.3
-![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/byungmeo/GersangClientCreator)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/byungmeo/GersangClientCreator)
+![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/byungmeo/GersangClientCreator)
 ![GitHub all releases](https://img.shields.io/github/downloads/byungmeo/GersangClientCreator/total)
 
 다운로드 주소
