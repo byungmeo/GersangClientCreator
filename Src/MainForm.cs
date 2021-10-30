@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Collections.Generic;
 using IWshRuntimeLibrary;
 using System.Drawing;
+using Octokit;
 
 namespace GersangClientCreator
 {
@@ -16,37 +17,12 @@ namespace GersangClientCreator
     {
         public MainForm()
         {
+            CheckUpdate();
             InitializeComponent();
         }
 
-        private async void Form1_Load(object sender, EventArgs e) {
-            this.Text += Application.ProductVersion; //폼 제목에 최신버전명 붙이기
-
-            //업데이트 유무 확인
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync("https://github.com/byungmeo/GersangClientCreator/releases/latest");
-            response.EnsureSuccessStatusCode();
-            string responseUri = response.RequestMessage.RequestUri.ToString();
-            string latestVersion = responseUri.Substring(responseUri.Length - 5);
-            
-            if (latestVersion != Application.ProductVersion)
-            {
-                DialogResult dr;
-
-                dr = MessageBox.Show("새로운 업데이트 버전(v." + latestVersion + ") 이 있습니다.\n" +
-                    "다운로드 주소로 접속하시겠습니까?",
-                    "업데이트 확인", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-
-                if(dr == DialogResult.OK)
-                {
-                    var ps = new ProcessStartInfo("https://github.com/byungmeo/GersangClientCreator/releases/latest")
-                    {
-                        UseShellExecute = true,
-                        Verb = "open"
-                    };
-                    Process.Start(ps);
-                }
-            }
+        private void Form1_Load(object sender, EventArgs e) {
+            this.Text += System.Windows.Forms.Application.ProductVersion; //폼 제목에 최신버전명 붙이기
 
             tb_MasterPath.Text = ConfigurationManager.AppSettings["masterPath"];
             string second = ConfigurationManager.AppSettings["secondName"];
@@ -59,7 +35,45 @@ namespace GersangClientCreator
                 tb_ThirdName.Text = third;
                 tb_ThirdName.ForeColor = Color.Black;
             }
-            
+        }
+
+        private async void CheckUpdate() {
+            try {
+                GitHubClient client = new GitHubClient(new ProductHeaderValue("Byungmeo"));
+                IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("byungmeo", "GersangClientCreator");
+                //Setup the versions
+                Version latestGitHubVersion = new Version(releases[0].TagName);
+                Version localVersion = new Version(System.Windows.Forms.Application.ProductVersion);   //Replace this with your local version. 
+                                                                                                       //Only tested with numeric values.
+
+                Debug.WriteLine("깃허브에 마지막으로 게시된 버전 : " + latestGitHubVersion);
+
+                //Compare the Versions
+                int versionComparison = localVersion.CompareTo(latestGitHubVersion);
+                if (versionComparison < 0) {
+                    //The version on GitHub is more up to date than this local release.
+                    Debug.WriteLine("구버전입니다! 업데이트 메시지박스를 출력합니다!");
+
+                    DialogResult dr = MessageBox.Show(releases[0].Body + "\n\n업데이트 하시겠습니까? (GitHub 접속)",
+                        "업데이트 안내", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+
+                    if (dr == DialogResult.OK) {
+                        var ps = new ProcessStartInfo("https://github.com/byungmeo/GersangClientCreator/releases/latest") {
+                            UseShellExecute = true,
+                            Verb = "open"
+                        };
+                        Process.Start(ps);
+                    }
+                } else if (versionComparison > 0) {
+                    //This local version is greater than the release version on GitHub.
+                    Debug.WriteLine("깃허브에 릴리즈된 버전보다 최신입니다!");
+                } else {
+                    //This local Version and the Version on GitHub are equal.
+                    Debug.WriteLine("현재 버전은 최신버전입니다!");
+                }
+            } catch (Exception ex) {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         //바로가기 생성
@@ -147,20 +161,20 @@ namespace GersangClientCreator
             }
             */
 
+            Debug.WriteLine("CreateSymbolicLink - Online관련 진입 전");
             //본클과 클라들이 세팅을 서로 독립적으로 유지하고싶을때
-            if(check_Online.Checked)
-            {
+            if (check_Online.Checked) {
                 FixedOnlineDirectory(secondPath, ref p);
                 FixedOnlineDirectory(thirdPath, ref p);
                 targetDirectorysList.Remove("Online"); //Online폴더의 심볼릭링크를 생성하지않도록 리스트에서 삭제
             }
 
+            Debug.WriteLine("CreateSymbolicLink - foreach관련 진입 전");
             //최종적으로 targetDirectorysList에 있는 폴더들을 심볼릭링크로 생성합니다.
-            foreach (string target in targetDirectorysList)
-            {
+            foreach (string target in targetDirectorysList) {
                 //mklink /d \Gersang\char \Gersang2\char
-                p.StandardInput.Write(@"mklink /d " + secondPath + @"\" + target + " " + sourcePath + @"\" + target + Environment.NewLine);
-                p.StandardInput.Write(@"mklink /d " + thirdPath + @"\" + target + " " + sourcePath + @"\" + target + Environment.NewLine);
+                p.StandardInput.Write(@"mklink /d """ + secondPath + @"\" + target + @""" """ + sourcePath + @"\" + target + @"""" + Environment.NewLine);
+                p.StandardInput.Write(@"mklink /d """ + thirdPath + @"\" + target + @""" """ + sourcePath + @"\" + target + @"""" + Environment.NewLine);
             }
         }
 
@@ -211,8 +225,9 @@ namespace GersangClientCreator
                     }
                 } else
                 {
+                    Debug.WriteLine(@"mklink """ + onlinePath + @"\" + fileName + @""" """ + sourcePath + @"\" + fileName + @"""" + Environment.NewLine);
                     //그 외 파일은 심볼릭으로 (파일은 /d 옵션이 필요없다)
-                    p.StandardInput.Write(@"mklink " + onlinePath + @"\" + fileName + " " + sourcePath + @"\" + fileName + Environment.NewLine);
+                    p.StandardInput.Write(@"mklink """ + onlinePath + @"\" + fileName + @""" """ + sourcePath + @"\" + fileName + @"""" + Environment.NewLine);
                 }
             }
 
@@ -220,7 +235,7 @@ namespace GersangClientCreator
             foreach (string target in Directory.GetDirectories(sourcePath, "*.*", SearchOption.TopDirectoryOnly))
             {
                 string dirName = @"\" + new DirectoryInfo(target).Name;
-                p.StandardInput.Write(@"mklink /d " + onlinePath + dirName + " " + sourcePath + dirName + Environment.NewLine);
+                p.StandardInput.Write(@"mklink /d """ + onlinePath + dirName + @""" """ + sourcePath + dirName + @"""" + Environment.NewLine);
             }
         }
 
@@ -292,17 +307,21 @@ namespace GersangClientCreator
             p.Start();
 
             //CMD 구문 실행 (p는 AKInteractive 폴더에 머물러있는상태)
+            Debug.WriteLine("CreateDirectory 진입 전");
             CreateDirectory(ref p);
+            Debug.WriteLine("CreateSymbolicLink 진입 전");
             CreateSymbolicLink(ref p);
             //
             Thread.Sleep(500);
 
+            Debug.WriteLine("CopyFile 진입 전");
             CopyFile();
             if(check_Shortcut.Checked)
             {
+                Debug.WriteLine("CreateShortcut 진입 전");
                 CreateShortcut();
             }
-            
+            Debug.WriteLine("CopyFile 또는 CreateShortcut 진입 종료");
 
             p.StandardInput.Close();
             p.WaitForExit();

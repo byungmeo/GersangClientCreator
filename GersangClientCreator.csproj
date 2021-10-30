@@ -14,7 +14,7 @@
     <RepositoryUrl>https://github.com/byungmeo/GersangClientCreator</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.2.3</Version>
+    <Version>1.2.4</Version>
     <ApplicationIcon>Img\DONKY.ico</ApplicationIcon>
     <RootNamespace>GersangClientCreator</RootNamespace>
     <Product>GersangClientCreator</Product>
@@ -23,6 +23,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,6 +36,10 @@
       <Isolated>false</Isolated>
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Octokit" Version="0.50.0" />
   </ItemGroup>
 
 </Project>
