@@ -5,14 +5,13 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Threading;
 using System.Configuration;
-using System.Net.Http;
 using System.Collections.Generic;
 using IWshRuntimeLibrary;
 using System.Drawing;
 using Octokit;
+using System.Reflection;
 
-namespace GersangClientCreator
-{
+namespace GersangClientCreator {
     public partial class MainForm : Form
     {
         public MainForm()
@@ -38,37 +37,33 @@ namespace GersangClientCreator
         }
 
         private async void CheckUpdate() {
+            // 버전 업데이트 시 패키지 버전을 바꿔주세요.
             try {
+                //깃허브에서 모든 릴리즈 정보를 받아옵니다.
                 GitHubClient client = new GitHubClient(new ProductHeaderValue("Byungmeo"));
                 IReadOnlyList<Release> releases = await client.Repository.Release.GetAll("byungmeo", "GersangClientCreator");
-                //Setup the versions
+
+                //깃허브에 게시된 마지막 버전과 현재 버전을 초기화 합니다.
                 Version latestGitHubVersion = new Version(releases[0].TagName);
-                Version localVersion = new Version(System.Windows.Forms.Application.ProductVersion);   //Replace this with your local version. 
-                                                                                                       //Only tested with numeric values.
+                Version localVersion = new Version(System.Windows.Forms.Application.ProductVersion);
 
                 Debug.WriteLine("깃허브에 마지막으로 게시된 버전 : " + latestGitHubVersion);
+                Debug.WriteLine("현재 프로젝트 버전 : " + localVersion);
 
-                //Compare the Versions
+                //버전 비교
                 int versionComparison = localVersion.CompareTo(latestGitHubVersion);
                 if (versionComparison < 0) {
-                    //The version on GitHub is more up to date than this local release.
                     Debug.WriteLine("구버전입니다! 업데이트 메시지박스를 출력합니다!");
 
                     DialogResult dr = MessageBox.Show(releases[0].Body + "\n\n업데이트 하시겠습니까? (GitHub 접속)",
                         "업데이트 안내", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                     if (dr == DialogResult.OK) {
-                        var ps = new ProcessStartInfo("https://github.com/byungmeo/GersangClientCreator/releases/latest") {
-                            UseShellExecute = true,
-                            Verb = "open"
-                        };
-                        Process.Start(ps);
+                        System.Diagnostics.Process.Start("https://github.com/byungmeo/GersangClientCreator/releases/latest");
                     }
                 } else if (versionComparison > 0) {
-                    //This local version is greater than the release version on GitHub.
                     Debug.WriteLine("깃허브에 릴리즈된 버전보다 최신입니다!");
                 } else {
-                    //This local Version and the Version on GitHub are equal.
                     Debug.WriteLine("현재 버전은 최신버전입니다!");
                 }
             } catch (Exception ex) {
@@ -138,8 +133,12 @@ namespace GersangClientCreator
             string thirdPath = sourcePath + @"\..\" + tb_ThirdName.Text;
 
             //char, eft, fnt, music, Online, pal, tempeft, Temporary Autopath, tile, yfnt, XIGNCODE
-            string[] targetDirectorys = { "char", "eft", "fnt", "music", "Online", "pal", "tempeft", "Temporary Autopath", "tile", "yfnt", "XIGNCODE" };
+            string[] targetDirectorys = { "char", "eft", "fnt", "music", "Online", "pal", "Production", "tempeft", "Temporary Autopatch", "tile", "yfnt" };
             List<string> targetDirectorysList = new List<string>(targetDirectorys);
+
+            //+2021-12-21 XIGNCODE는 직접 복사
+            p.StandardInput.Write(@"xcopy """ + sourcePath + @"\XIGNCODE"" """ + secondPath + @"\XIGNCODE"" /i" + Environment.NewLine);
+            p.StandardInput.Write(@"xcopy """ + sourcePath + @"\XIGNCODE"" """ + thirdPath + @"\XIGNCODE"" /i" + Environment.NewLine);
 
             /*
             //사운드 폴더 복사 체크 해제시
