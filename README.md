@@ -1,7 +1,13 @@
-# Gersang Client Creator
+# Gersang Client Creator (개발 중단)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/byungmeo/GersangClientCreator)
 ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/byungmeo/GersangClientCreator)
 ![GitHub all releases](https://img.shields.io/github/downloads/byungmeo/GersangClientCreator/total)
+
+거상 다클라 스테이션과 통합 되었습니다.
+
+따라서, 앞으로 거상 다클라 생성기에 대한 개발을 더이상 진행하지 않습니다.
+
+https://github.com/byungmeo/GersangClientStation
 
 ## 요구사항
 Windows 7, 10, 11
