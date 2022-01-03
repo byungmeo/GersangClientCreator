@@ -7,6 +7,8 @@
 
 따라서, 앞으로 거상 다클라 생성기에 대한 개발을 더이상 진행하지 않습니다.
 
+아래 링크를 통해 다클라 스테이션을 이용해주세요.
+
 https://github.com/byungmeo/GersangClientStation
 
 ## 요구사항
